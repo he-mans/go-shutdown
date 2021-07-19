@@ -77,7 +77,7 @@ func SubscribeChannelForInterrupt(channel chan<- struct{}) {
 // Subscribes a callback function to listen for interrupt event.
 //
 // The callback function is called asynchronous.
-func SubscribeFuncForInterrupt(callback func()) {
+func SubscribeFunctionForInterrupt(callback func()) {
 	functionMux.Lock()
 	defer functionMux.Unlock()
 	subscribedFunctions = append(subscribedFunctions, callback)
