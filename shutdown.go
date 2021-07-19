@@ -48,7 +48,7 @@ func notifyAllChannels() {
 	}
 }
 
-// sending on closed channel generated panic.
+// sending on closed channel results in panic.
 // this function prevents main function from panicking and helps continue our main loop
 func sendSafelyToChannel(c chan<- struct{}) {
 	defer func() {
