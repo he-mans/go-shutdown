@@ -11,5 +11,5 @@ go get github.com/hemaan/go-shutdown
 - <b>shutdown.SubscribeChannelForInterrupt(channen chan<- struct{})</b> : lets a channel subscribe for a shutdown interrupt
 - <b>shutdown.Add(num int)</b> : lets you add a method to the shutdown wait group. sync.WaitGroup.Add() underhood
 - <b>shutdown.Done()</b> : lets you remove a method to the shutdown wait group. sync.WaitGroup.Done() underhood
-- <b>shutdown.WaitForProcesses()</b> : sync.WaitGouup.Wait() underhood. waits for processes currently in the shutdown wait group
+- <b>shutdown.WaitForProcesses()</b> : waits for processes currently in the shutdown wait group. sync.WaitGroup.Wait() underhood. 
 - <b>shutdown.RemainingProcesses()</b> : returns remaining processes currently remaining in the shutdown wait group
