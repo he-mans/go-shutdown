@@ -2,7 +2,7 @@
 A lightweight package to assist in graceful shutdown
 
 ## Installation
-go get github.com/hemaan/go-shutdown
+`go get github.com/hemaan/go-shutdown`
 
 ## Utility
 
