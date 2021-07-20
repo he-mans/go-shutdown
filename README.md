@@ -1,5 +1,5 @@
 # go-shutdown
-A lightweight package to assist in graceful shutdown
+A lightweight package to assist in graceful shutdown of a go application
 
 ## Installation
 `go get github.com/hemaan/go-shutdown`
