@@ -12,4 +12,4 @@ A lightweight package to assist in graceful shutdown
 - <b>`shutdown.Add(num int)`</b> : lets you add a method to the shutdown wait group. `sync.WaitGroup.Add()` underhood
 - <b>`shutdown.Done()`</b> : lets you remove a method to the shutdown wait group. `sync.WaitGroup.Done()` underhood
 - <b>`shutdown.WaitForProcesses()`</b> : waits for processes currently in the shutdown wait group. `sync.WaitGroup.Wait()` underhood. 
-- <b>`shutdown.RemainingProcesses()`</b> : returns remaining processes currently in the shutdown wait group
+- <b>`shutdown.RemainingProcesses() int`</b> : returns remaining processes currently in the shutdown wait group
