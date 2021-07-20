@@ -1,6 +1,9 @@
 # go-shutdown
 A lightweight package to assist in graceful shutdown
 
+## Installation
+go get github.com/hemaan/go-shutdown
+
 ## Utility
 
 - <b>shutdown.Requested() bool</b> : returns a boolean indicating if interrupt was received.
