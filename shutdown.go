@@ -7,7 +7,7 @@ import (
 	"syscall"
 )
 
-var wg sync.WaitGroup
+var shutdownWG sync.WaitGroup
 var requested bool = false
 var intr = make(chan os.Signal, 10)
 var subscribedFunctions []func()
@@ -25,12 +25,17 @@ func init() {
 func listenForInterrupt() {
 	signal.Notify(intr, os.Interrupt, syscall.SIGINT, syscall.SIGTERM)
 	<-intr
-	go notifyAllChannels()
-	go notifyAllFunctions()
+
+	var wg sync.WaitGroup = sync.WaitGroup{}
+	wg.Add(2)
+	go notifyAllChannels(&wg)
+	go notifyAllFunctions(&wg)
 	requested = true
+	wg.Wait()
 }
 
-func notifyAllFunctions() {
+func notifyAllFunctions(wg *sync.WaitGroup) {
+	defer wg.Done()
 	functionMux.Lock()
 	defer functionMux.Unlock()
 
@@ -39,7 +44,8 @@ func notifyAllFunctions() {
 	}
 }
 
-func notifyAllChannels() {
+func notifyAllChannels(wg *sync.WaitGroup) {
+	defer wg.Done()
 	channelMux.Lock()
 	defer channelMux.Unlock()
 
@@ -48,7 +54,7 @@ func notifyAllChannels() {
 	}
 }
 
-// sending on closed channel results in panic.
+// sending on closed channel generated panic.
 // this function prevents main function from panicking and helps continue our main loop
 func sendSafelyToChannel(c chan<- struct{}) {
 	defer func() {
@@ -102,7 +108,7 @@ func RemainingProcesses() int {
 func Add(num int) {
 	processesMux.Lock()
 	defer processesMux.Unlock()
-	wg.Add(num)
+	shutdownWG.Add(num)
 	processes++
 }
 
@@ -113,7 +119,7 @@ func Add(num int) {
 func Done() {
 	processesMux.Lock()
 	defer processesMux.Unlock()
-	wg.Done()
+	shutdownWG.Done()
 	processes--
 }
 
@@ -121,5 +127,6 @@ func Done() {
 //
 // wg.Wait() underhood
 func WaitForProcesses() {
-	wg.Wait()
+	shutdownWG.Wait()
 }
+
